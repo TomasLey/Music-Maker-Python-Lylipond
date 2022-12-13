@@ -25,7 +25,7 @@ def decorator_octava(melody_ly):     # Coge nota p.e. a4 y saca <a4 a4'>
                     elif m == ",": 
                         mPos = first_note.find(",")
                         print('b')
-                        octava = "<" + first_note[0:mPos] + " " + first_note[0:mPos]  + ">" + first_note[mPos+1:len(first_note)]
+                        octava = "<" + first_note[0:mPos+1] + " " + first_note[0:mPos]  + ">" + first_note[mPos+1:len(first_note)]
                         break
                     elif m.isdigit():
                         mPos = first_note.find(m)
