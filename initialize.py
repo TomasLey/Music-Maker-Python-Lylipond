@@ -1,11 +1,16 @@
 import subprocess
 from Translator_py_ly.translator import *
 from Translator_py_ly.Automatic_bass.Bass import melody_bass_translate
+from Decorators.Decorators import decorator_octava
 
 def initialize_sheet():                     # Initial text of LilyPond coding, includes title, composer and instrument
-    title = input("Title: ")
-    composer = input("Composer: ")
-    instrument = input("Instrument: ")
+    #title = input("Title: ")
+    #composer = input("Composer: ")
+    #instrument = input("Instrument: ")
+
+    title = "asd"
+    composer = "MUSE"
+    instrument = "Piano"
 
     initial = ["\\version \"2.22.2\" ", 
                "\\header {", 
@@ -19,12 +24,17 @@ def initialize_sheet():                     # Initial text of LilyPond coding, i
     return
 
 def start_sheet(reference, key_signature):          # Time signature, metronome and clef
-    time = input("Define a time signature (f.e. 3/4): ")
+    # time = input("Define a time signature (f.e. 3/4): ")
+    time = "3/4"
 
-    figure, metronome = input("Define a metronome tempo (figure tempo): ").split()
-    clef = input("Define a cleff (treble/alto/tenor/bass): ")
+    #figure, metronome = input("Define a metronome tempo (figure tempo): ").split()
+    figure, metronome = "4", "120"
 
-    anacruse = input("Do you want to start with an anacruse? (Yes/No): ")       # Anacruse start check
+    #clef = input("Define a cleff (treble/alto/tenor/bass): ")
+    clef = "treble"
+
+    #anacruse = input("Do you want to start with an anacruse? (Yes/No): ")       # Anacruse start check
+    anacruse = "No"
     if anacruse == "Yes":
         time_anacruse = input("Rythm anacruse (in quarter notes): ")
     else:
@@ -48,10 +58,12 @@ def start_sheet(reference, key_signature):          # Time signature, metronome 
 def start_translator(melody_py, reference, key_signature):          # Melody translation
 
     melody_ly = melody_translate(melody_py, reference, key_signature)
+    melody_ly_decorated = decorator_octava(melody_ly)
     finish_staff = ["\n \\bar \"|.\"}"]
 
     with open("prueba.txt", "a") as f:
-        f.write('\n'.join(melody_ly))
+        f.write('\n'.join(melody_ly_decorated))
+        #f.write('\n'.join(melody_ly))
         f.write('\n'.join(finish_staff))
 
     return
@@ -88,8 +100,8 @@ def compile_PDF():
     with open("prueba.txt", "a") as f:
         f.write('\n'.join(finish))
 
-    path_to_Lylipond = "C:\\Program Files (x86)\\LilyPond\\usr\\bin\\lilypond.exe"
-    path_to_file = "C:\\Users\\rosam\\OneDrive\\Escritorio\\MUSE-1.1\\Ampliación de Matemáticas -1\\Visual Studio\\Music_Maker\\Music_Maker\\prueba.txt"
-
+    path_to_Lylipond = "D:\\Program Files\\LilyPond\\usr\\bin\\lilypond.exe"
+    path_to_file = "D:\\Descargas\\Aeroespecial\\MUSE 1\\Matematicas\\Programacion\\Programas\\Music Maker\\prueba.txt"
+    
     return subprocess.call([path_to_Lylipond,path_to_file])
 
