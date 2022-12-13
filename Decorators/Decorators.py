@@ -19,22 +19,26 @@ def decorator_octava(melody_ly):     # Coge nota p.e. a4 y saca <a4 a4'>
                 for m in first_note:  
                     if m == "'":
                         mPos = first_note.find("'")
-                        octava = "<" + first_note[0:mPos] + " " + first_note[0:mPos] + "'" + ">" + first_note[mPos:len(first_note)]
+                        print(first_note)
+                        octava = "<" + first_note[0:mPos+1] + " " + first_note[0:mPos+1] + "'" + ">" + first_note[mPos+1:len(first_note)]
                         break
                     elif m == ",": 
                         mPos = first_note.find(",")
+                        print('b')
                         octava = "<" + first_note[0:mPos] + " " + first_note[0:mPos]  + ">" + first_note[mPos+1:len(first_note)]
                         break
                     elif m.isdigit():
                         mPos = first_note.find(m)
-                        first_note = first_note[0:len(first_note)-1]
-                        octava = "<" + first_note[0:mPos] + " " + first_note[0:mPos] + "'" + first_note[mPos:len(first_note)] + ">"
+                        print('c')
+                        first_note_clean = first_note[0:len(first_note)-1]
+                        octava = "<" + first_note_clean[0:mPos] + " " + first_note_clean[0:mPos] + "'"  + ">" + first_note[mPos:len(first_note)]
                         break
                     else:
-                        octava = "<" + first_note + " " +  first_note[0] + "'" + ">"
-                    break       # termina el bucle
+                        if m == first_note[-1]:
+                            octava = "<" + first_note + " " +  first_note[0] + "'" + ">"
+                            print('d')
+                            break       # termina el bucle
                 break
-        print(bar[j:n])
         melody_ly_decorator[n] = "  " + octava + bar[j:len(bar)]
 
     return(melody_ly_decorator) 
